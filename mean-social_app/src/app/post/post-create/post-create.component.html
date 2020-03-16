@@ -1,0 +1,37 @@
+<mat-spinner *ngIf="loading"></mat-spinner>
+<form [formGroup]="form" (submit)="onSubmitComment()" *ngIf="!loading">
+  <mat-card>
+    <mat-form-field>
+      <input matInput type="text" placeholder="Title" formControlName="title" />
+      <mat-error *ngIf="form.get('title').invalid"
+        >Please enter a valid title, longer than 3 characters</mat-error
+      >
+    </mat-form-field>
+    <div>
+      <button mat-stroked-button type="button" (click)="filePicker.click()">
+        Add Image
+      </button>
+      <input  type="file" #filePicker (change)="onImage($event)" />
+    </div>
+    <div>
+      <img class="image-preview" [src]="imagePreview" [alt]="form.value.title" *ngIf="imagePreview !== '' && imagePreview"/>
+    </div>    
+    <mat-form-field>
+      <textarea
+        placeholder="Comment below"
+        matInput
+        formControlName="content"
+        class="form-control"
+      ></textarea>
+      <mat-error *ngIf="form.get('content').invalid"
+        >Please enter a valid comment</mat-error
+      >
+    </mat-form-field>
+  </mat-card>
+  <button mat-stroked-button class="mat-accent" type="submit">
+    Submit Comment
+  </button>
+</form>
+<hr />
+
+<h3><strong>Comment:</strong> {{ displayComment }}</h3>
